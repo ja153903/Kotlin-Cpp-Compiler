@@ -68,7 +68,7 @@ fun getStudentSubmissions(studentPaths: List<String>, questionNum: Int): Map<Str
 }
 
 @Throws(IOException::class)
-fun compile(studentSubmission: Map<String, String>, questionNum: Int, compiler: String="clang++") {
+fun compile(studentSubmission: Map<String, String>, questionNum: Int, compiler: String) {
     for (absolutePath in studentSubmission.keys) {
         val filename = studentSubmission[absolutePath]
         val pathToFile = "$absolutePath$filename"
@@ -81,7 +81,7 @@ fun compile(studentSubmission: Map<String, String>, questionNum: Int, compiler: 
 }
 
 @Throws(IOException::class)
-fun runPipeline(homeDirectory: String, questionNum: Int) {
+fun runPipeline(homeDirectory: String, questionNum: Int, compiler: String = "clang++") {
     val homedir = File(homeDirectory)
     val studentPaths = ArrayList<String>()
 
@@ -92,7 +92,7 @@ fun runPipeline(homeDirectory: String, questionNum: Int) {
     }
 
     val studentSubmissions = getStudentSubmissions(studentPaths, questionNum)
-    compile(studentSubmissions, questionNum)
+    compile(studentSubmissions, questionNum, compiler)
 }
 
 fun main() {
