@@ -6,16 +6,16 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 
-fun containsQuestionNumber(filename: String, questionNum: Int): Boolean {
+private fun containsQuestionNumber(filename: String, questionNum: Int): Boolean {
     return filename.matches(Regex(".*(q|Q|question|QUESTION|quest)$questionNum.*"))
 }
 
-fun isCppFile(filename: String): Boolean {
+private fun isCppFile(filename: String): Boolean {
     return filename.matches(Regex(".*[.]c.*"))
 }
 
 @Throws(IOException::class)
-fun addToFile(line: String, pathToFile: Path) {
+private fun addToFile(line: String, pathToFile: Path) {
     try {
         if (line != "#include \"pch.h\"") {
             val formattedLine = "$line\n"
@@ -30,7 +30,7 @@ fun addToFile(line: String, pathToFile: Path) {
 }
 
 @Throws(IOException::class)
-fun handlePCH(dir: String, filename: String) {
+private fun handlePCH(dir: String, filename: String) {
     val copyFile = "copy_$filename"
     val pathToCopyFile = Paths.get(dir, copyFile)
     val pathToFile = Paths.get(dir, filename)
@@ -48,7 +48,7 @@ fun handlePCH(dir: String, filename: String) {
 }
 
 @Throws(IOException::class)
-fun getStudentSubmissions(studentPaths: List<String>, questionNum: Int): Map<String, String> {
+private fun getStudentSubmissions(studentPaths: List<String>, questionNum: Int): Map<String, String> {
     val studentSubmissions = mutableMapOf<String, String>()
 
     for (path in studentPaths) {
@@ -68,7 +68,7 @@ fun getStudentSubmissions(studentPaths: List<String>, questionNum: Int): Map<Str
 }
 
 @Throws(IOException::class)
-fun compile(studentSubmission: Map<String, String>, questionNum: Int, compiler: String) {
+private fun compile(studentSubmission: Map<String, String>, questionNum: Int, compiler: String) {
     for (absolutePath in studentSubmission.keys) {
         val filename = studentSubmission[absolutePath]
         val pathToFile = "$absolutePath$filename"
